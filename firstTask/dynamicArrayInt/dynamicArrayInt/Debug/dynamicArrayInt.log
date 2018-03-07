@@ -1,2 +1,6 @@
-﻿  ConsoleApplication6.cpp
-  dynamicArrayInt.vcxproj -> C:\Users\User\Documents\Visual Studio 2015\Projects\dynamicArrayInt\Debug\dynamicArrayInt.exe
+﻿  stdafx.cpp
+  DynamicArrayInt.cpp
+  CircularBuffer.cpp
+  main.cpp
+c1xx : fatal error C1083: Не удается открыть файл источник: ..\..\ConsoleApplication6\ConsoleApplication6\main.cpp: No such file or directory
+  Создание кода...
