@@ -152,10 +152,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ConsoleApplication6\ConsoleApplication6\main.cpp" />
     <ClCompile Include="BufferIterator.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="DynamicArrayInt.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

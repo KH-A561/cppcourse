@@ -7,6 +7,7 @@ CircularBuffer::CircularBuffer()
 	this->data = new DynamicArrayInt();
 	this->head = 0;
 	this->tail = 0;
+	this->size = 0;
 }
 
 CircularBuffer::CircularBuffer(int& size)
@@ -14,29 +15,37 @@ CircularBuffer::CircularBuffer(int& size)
 	this->data = new DynamicArrayInt(size);
 	this->head = 0;
 	this->tail = 0;
+	this->size = 0;
 }
 
 void CircularBuffer::push(int& element)
 {
-	if (tail >= this->getSize) {
-		throw "Your buffer is full!";
+	if (tail == getSize() - 1) {
+		if (size != 0) {
+			throw "Your array is full";
+		}
+		this->data[tail] = element;
+		tail == 0;
+		size++;
+	}
+	if (tail == head && size != 0) {
+		throw "Your array is full";
 	}
 	this->data[tail] = element;
 	tail++;
+	size++;
 }
 
 int CircularBuffer::getSize()
 {
-	return tail - head + 1;
+	return this->size;
 }
 
 int CircularBuffer::pull()
 {
 	int buf = (*data)[head];
 	head++;
-	if (head > tail) {
-		head = tail;
-	}
+	size--;
 	return buf;
 }
 
@@ -54,7 +63,7 @@ void CircularBuffer::makeEmpty()
 
 bool CircularBuffer::isEmpty()
 {
-	return this->head == this->tail;
+	return this->size == 0;
 }
 
 

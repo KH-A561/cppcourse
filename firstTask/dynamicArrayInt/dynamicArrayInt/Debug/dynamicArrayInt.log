@@ -1,6 +1,7 @@
-﻿  stdafx.cpp
-  DynamicArrayInt.cpp
+﻿  main.cpp
   CircularBuffer.cpp
-  main.cpp
-c1xx : fatal error C1083: Не удается открыть файл источник: ..\..\ConsoleApplication6\ConsoleApplication6\main.cpp: No such file or directory
+c:\users\user\documents\visual studio 2015\projects\dynamicarrayint\dynamicarrayint\circularbuffer.cpp(28): warning C4553: ==: оператор не имеет результата; возможно, имелся в виду "="
   Создание кода...
+  Пропуск... (изменения не обнаружены)
+  BufferIterator.cpp
+  dynamicArrayInt.vcxproj -> C:\Users\User\Documents\Visual Studio 2015\Projects\dynamicArrayInt\Debug\dynamicArrayInt.exe

@@ -18,7 +18,7 @@ void BufferIterator::start()
 
 void BufferIterator::next()
 {
-	if (this->finish == true) {
+	if (this->finish() == true) {
 		throw "You are out of border";
 	}
 	this->flag++;
@@ -26,7 +26,7 @@ void BufferIterator::next()
 
 bool BufferIterator::finish()
 {
-	if (this->flag >= queue->getSize) {
+	if (this->flag >= queue->getSize()) {
 		return true;
 	}
 	return false;
@@ -34,7 +34,7 @@ bool BufferIterator::finish()
 
 int BufferIterator::getValue()
 {
-	return queue->top;
+	return queue->top();
 }
 
 BufferIterator::~BufferIterator()

@@ -7,6 +7,7 @@ private:
 	DynamicArrayInt* data;
 	int head;
 	int tail;
+	int size;
 
 public:
 	CircularBuffer();
