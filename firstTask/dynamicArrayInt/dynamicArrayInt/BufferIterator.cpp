@@ -2,31 +2,24 @@
 #include "BufferIterator.h"
 
 
-BufferIterator::BufferIterator()
-{
-}
-
 BufferIterator::BufferIterator(CircularBuffer& queue)
 {
-	this->queue = &queue;
+	this->queue = queue;
 }
 
 void BufferIterator::start()
 {
-	this->flag = 0;
+	flag = 0;
 }
 
 void BufferIterator::next()
 {
-	if (this->finish() == true) {
-		throw "You are out of border";
-	}
-	this->flag++;
+	flag++;
 }
 
 bool BufferIterator::finish()
 {
-	if (this->flag >= queue->getSize()) {
+	if (flag >= queue.getLength()) {
 		return true;
 	}
 	return false;
@@ -34,9 +27,6 @@ bool BufferIterator::finish()
 
 int BufferIterator::getValue()
 {
-	return queue->top();
+	return queue.top();
 }
 
-BufferIterator::~BufferIterator()
-{
-}

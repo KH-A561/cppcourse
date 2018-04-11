@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 
+
 class DynamicArrayInt
 {
 private:
@@ -42,7 +43,7 @@ public:
 
 	friend const bool DynamicArrayInt::operator>=(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr);
 
-	friend const DynamicArrayInt& DynamicArrayInt::operator+(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr);
+	friend DynamicArrayInt& DynamicArrayInt::operator+(DynamicArrayInt& firstArr, DynamicArrayInt& secondArr);
 
 	friend std::istream& operator >> (std::istream& inStream, DynamicArrayInt& inArr);
 

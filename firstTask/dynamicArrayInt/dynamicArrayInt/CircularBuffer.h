@@ -7,16 +7,16 @@ private:
 	DynamicArrayInt* data;
 	int head;
 	int tail;
-	int size;
+	int length;
 
 public:
 	CircularBuffer();
 
-	CircularBuffer(int& size);
+	CircularBuffer(int size);
 
-	void push(int& element);
+	void push(int element);
 
-	int getSize();
+	int getLength();
 
 	int pull();
 

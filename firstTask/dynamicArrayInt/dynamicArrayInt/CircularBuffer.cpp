@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "CircularBuffer.h"
+#include "DynamicArrayInt.h"
 
 
 CircularBuffer::CircularBuffer()
@@ -7,45 +8,41 @@ CircularBuffer::CircularBuffer()
 	this->data = new DynamicArrayInt();
 	this->head = 0;
 	this->tail = 0;
-	this->size = 0;
+	this->length = 0;
 }
 
-CircularBuffer::CircularBuffer(int& size)
+CircularBuffer::CircularBuffer(int size)
 {
 	this->data = new DynamicArrayInt(size);
 	this->head = 0;
 	this->tail = 0;
-	this->size = 0;
+	this->length = 0;
 }
 
-void CircularBuffer::push(int& element)
+void CircularBuffer::push(int element)
 {
-	if (tail == getSize() - 1) {
-		if (size != 0) {
-			throw "Your array is full";
-		}
-		this->data[tail] = element;
-		tail == 0;
-		size++;
-	}
-	if (tail == head && size != 0) {
+	if (getLength() == data->length()) {
 		throw "Your array is full";
 	}
-	this->data[tail] = element;
-	tail++;
-	size++;
+	(*data)[tail] = element;
+	if (tail == data->length() - 1) {
+		tail = 0;
+	} else {
+		tail++;
+	}
+	length++;
 }
 
-int CircularBuffer::getSize()
+int CircularBuffer::getLength()
 {
-	return this->size;
+	return this->length;
 }
 
 int CircularBuffer::pull()
 {
 	int buf = (*data)[head];
 	head++;
-	size--;
+	length--;
 	return buf;
 }
 
@@ -63,11 +60,11 @@ void CircularBuffer::makeEmpty()
 
 bool CircularBuffer::isEmpty()
 {
-	return this->size == 0;
+	return this->getLength() == 0;
 }
 
 
 CircularBuffer::~CircularBuffer()
 {
-	delete data;
+	data->~DynamicArrayInt();
 }

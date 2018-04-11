@@ -4,12 +4,10 @@
 class BufferIterator
 {
 private:
-	CircularBuffer *queue;
+	CircularBuffer queue;
 	int flag;
 
 public:
-	BufferIterator();
-
 	BufferIterator(CircularBuffer& queue);
 
 	void start();
@@ -19,7 +17,5 @@ public:
 	bool finish();
 
 	int getValue();
-
-	~BufferIterator();
 };
 

@@ -8,61 +8,60 @@
 
 DynamicArrayInt::DynamicArrayInt()
 {
-	this->size = 0;
-	this->array = new int[0];
+	size = 0;
+	array = new int[0];
 }
 
 DynamicArrayInt::DynamicArrayInt(int size)
 {
 	this->size = size;
-	this->array = new int[size];
+	array = new int[size];
 }
 
 DynamicArrayInt::DynamicArrayInt(int size, int n)
 {
 	this->size = size;
-	this->array = new int[size];
+	array = new int[size];
 	for (int i = 0; i < size; i++)
 	{
-		this->array[i] = n;
+		array[i] = n;
 	}
 }
 
 DynamicArrayInt::DynamicArrayInt(DynamicArrayInt &arrayCopy)
 {
-	this->size = arrayCopy.size;
-	this->array = new int[arrayCopy.size];
+	size = arrayCopy.size;
+	array = new int[arrayCopy.size];
 	for (int i = 0; i < arrayCopy.size; i++)
 	{
-		this->array[i] = arrayCopy.array[i];
+		array[i] = arrayCopy.array[i];
 	}
 }
 
 DynamicArrayInt::DynamicArrayInt(DynamicArrayInt &&arrayTransfer)
 {
-	this->size = arrayTransfer.size;
-	this->array = new int[arrayTransfer.size];
-	for (int i = 0; i < arrayTransfer.size; i++)
-	{
-		this->array[i] = arrayTransfer.array[i];
-	}
+	size = arrayTransfer.size;
+	array = arrayTransfer.array;
 	arrayTransfer.size = NULL;
 	arrayTransfer.array = nullptr;
 }
 
 DynamicArrayInt::~DynamicArrayInt()
 {
-	delete[] this->array;
+	delete[] array;
 }
 
 int DynamicArrayInt::length()
 {
-	return this->size;
+	return size;
 }
 
 int & DynamicArrayInt::operator[](int i)
 {
-	return this->array[i];
+	if (i >= 0 && i < size) {
+		return DynamicArrayInt::array[i];
+	}
+	throw -1;
 }
 
 void DynamicArrayInt::resize(int newSize)
@@ -70,7 +69,7 @@ void DynamicArrayInt::resize(int newSize)
 	int *newArray = new int[newSize];
 	for (int i = 0; i < newSize; i++)
 	{
-		newArray[i] = this->array[i];
+		newArray[i] = array[i];
 	}
 	if (newSize > this->size) {
 		for (int i = this->size; i < newSize; i++)
@@ -78,19 +77,19 @@ void DynamicArrayInt::resize(int newSize)
 			newArray[i] = 0;
 		}
 	}
-	delete[] this->array;
-	this->array = newArray;
+	delete[] array;
+	array = newArray;
 	this->size = newSize;
 }
 
 DynamicArrayInt& DynamicArrayInt::operator=(const DynamicArrayInt& secondArr)
 {
 	delete[] array;
-	this->array = new int[secondArr.size];
-	for (int i = 0; i < secondArr.size; i++) {
-		this->array[i] = secondArr.array[i];
-	}
 	this->size = secondArr.size;
+	array = new int[secondArr.size];
+	for (int i = 0; i < secondArr.size; i++) {
+		array[i] = secondArr.array[i];
+	}
 	return *this;
 }
 
@@ -99,10 +98,7 @@ DynamicArrayInt & DynamicArrayInt::operator=(DynamicArrayInt && secondArr)
 	if (this != &secondArr) {
 		delete[] this->array;
 		this->size = secondArr.size;
-		for (int i = 0; i < secondArr.size; i++)
-		{
-			this->array[i] = secondArr.array[i];
-		}
+		this->array = secondArr.array;
 		secondArr.size = 0;
 		secondArr.array = nullptr;
 	}
@@ -111,7 +107,9 @@ DynamicArrayInt & DynamicArrayInt::operator=(DynamicArrayInt && secondArr)
 
 const bool operator==(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr.size != secondArr.size) throw new std::invalid_argument("Array lengths are unequal");
+	if (firstArr.size != secondArr.size) {
+		throw std::invalid_argument("Array lengths are unequal");
+	}
 	for (int i = 0; i < secondArr.size; i++) {
 		if (firstArr.array[i] != secondArr.array[i]) { return false; }
 	}
@@ -120,7 +118,9 @@ const bool operator==(const DynamicArrayInt& firstArr, const DynamicArrayInt& se
 
 const bool operator!=(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr.size != secondArr.size) throw new std::invalid_argument("Array lengths are unequal");
+	if (firstArr.size != secondArr.size) {
+		throw std::invalid_argument("Array lengths are unequal");
+	}
 	for (int i = 0; i < secondArr.size; i++) {
 		if (firstArr.array[i] == secondArr.array[i]) { return false; }
 	}
@@ -129,7 +129,12 @@ const bool operator!=(const DynamicArrayInt& firstArr, const DynamicArrayInt& se
 
 const bool operator<(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr == secondArr) return false;
+	try {
+		if (firstArr == secondArr) return false;
+	}
+	catch (std::invalid_argument e) {
+		std::cerr << "\n" << e.what();
+	}
 	int n = firstArr.size > secondArr.size ? secondArr.size : firstArr.size;
 	for (int i = 0; i < n; i++) {
 		if (firstArr.array[i] < secondArr.array[i]) { return true; }
@@ -141,7 +146,12 @@ const bool operator<(const DynamicArrayInt& firstArr, const DynamicArrayInt& sec
 
 const bool operator>(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr == secondArr) return false;
+	try {
+		if (firstArr == secondArr) return false;
+	}
+	catch (std::invalid_argument e) {
+		std::cerr << "\n" << e.what();
+	}
 	int n = firstArr.size > secondArr.size ? secondArr.size : firstArr.size;
 	for (int i = 0; i < n; i++) {
 		if (firstArr.array[i] < secondArr.array[i]) { return false; }
@@ -153,7 +163,12 @@ const bool operator>(const DynamicArrayInt& firstArr, const DynamicArrayInt& sec
 
 const bool operator<=(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr == secondArr) return true;
+	try {
+		if (firstArr == secondArr) return true;
+	}
+	catch (std::invalid_argument e) {
+		std::cerr << "\n" << e.what();
+	}
 	int n = firstArr.size > secondArr.size ? secondArr.size : firstArr.size;
 	for (int i = 0; i < n; i++) {
 		if (firstArr.array[i] < secondArr.array[i]) { return true; }
@@ -165,7 +180,12 @@ const bool operator<=(const DynamicArrayInt& firstArr, const DynamicArrayInt& se
 
 const bool operator>=(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
 {
-	if (firstArr == secondArr) return true;
+	try {
+		if (firstArr == secondArr) return true;
+	}
+	catch (std::invalid_argument e) {
+		std::cerr << "\n" << e.what();
+	}
 	int n = firstArr.size > secondArr.size ? secondArr.size : firstArr.size;
 	for (int i = 0; i < n; i++) {
 		if (firstArr.array[i] < secondArr.array[i]) { return false; }
@@ -175,9 +195,9 @@ const bool operator>=(const DynamicArrayInt& firstArr, const DynamicArrayInt& se
 	return false;
 }
 
-const DynamicArrayInt& operator+(const DynamicArrayInt& firstArr, const DynamicArrayInt& secondArr)
+    DynamicArrayInt& operator+(DynamicArrayInt& firstArr, DynamicArrayInt& secondArr)
 {
-	DynamicArrayInt *newArr = new DynamicArrayInt(firstArr.size + secondArr.size);
+	DynamicArrayInt* newArr = new DynamicArrayInt(firstArr.size + secondArr.size);
 	newArr->size = firstArr.size + secondArr.size;
 	for (int i = 0; i < firstArr.size; i++) {
 		newArr->array[i] = firstArr.array[i];
@@ -192,7 +212,8 @@ std::istream & operator>> (std::istream & inStream, DynamicArrayInt & inArr)
 {
 	std::cout << "Enter a size of the array: ";
 	std::cin >> inArr.size;
-	std::cout << "\n";
+	std::cout << "\n";	
+	inArr.array = new int[inArr.size];
 	for (int i = 0; i < inArr.size; i++)
 	{
 		std::cout << "Enter an element of the array: ";
@@ -205,13 +226,13 @@ std::istream & operator>> (std::istream & inStream, DynamicArrayInt & inArr)
 
 
 
-std::ostream & operator<< (std::ostream & outStream, DynamicArrayInt & outArr)
+std::ostream & operator<< (std::ostream & outStream, const DynamicArrayInt & outArr)
 {
-	outStream << PRINTER(outArr) << ":" << " [";
-	for (int i = 0; i < outArr.length() - 1; i++)
+	outStream << " [";
+	for (int i = 0; i < outArr.size - 1; i++)
 	{
-		outStream << outArr[i] << ", ";
+		outStream << outArr.array[i] << ", ";
 	}
-	outStream << outArr[outArr.length() - 1] << "]" << std::endl;
+	outStream << outArr.array[outArr.size - 1] << "]" << std::endl;
 	return outStream;
 }
