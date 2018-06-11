@@ -6,10 +6,13 @@
 #include <cstdlib> 
 
 template<typename T>
+DoublyLinkedCircularList<T>::node::node(T elem, node* prev, node* nxt) : data(elem), previous(prev), next(nxt) {}
+
+template<typename T>
 DoublyLinkedCircularList<T>::DoublyLinkedCircularList()
 {
 	size = 0;
-	head = nullptr;
+	head = new node(nullptr, head, head);
 	current = nullptr;
 }
 
@@ -17,7 +20,7 @@ template<typename T>
 DoublyLinkedCircularList<T>::DoublyLinkedCircularList(T& data)
 {
 	size = 1;
-	head = DoublyLinkedCircularList::node::node(data, head, head);
+	head = new node(data, head, head);
 	current = nullptr;
 }
 
@@ -32,9 +35,10 @@ template<typename T>
 void DoublyLinkedCircularList<T>::push(T& elem)
 {
 	if (current == nullptr) throw std::invalid_argument("There's no iterator for this list");
-	node* newElem = new node(elem, *current, *(current->next));
+	node* newElem = new node(elem, current, current->next);
 	current->next->previous = newElem;
 	current->next = newElem;
+	current = current->previous;
 	size++;
 }
 
@@ -89,30 +93,25 @@ int DoublyLinkedCircularList<T>::getSize()
 template<typename T>
 IIterator<T>* DoublyLinkedCircularList<T>::iterator()
 {
-	IIterator<T>* iter = new Iterator(this);
+	IIterator<T>* iter = new Iterator(*this);
+	iter->start();
 	return iter;
 }
 
 template<typename T>
 DoublyLinkedCircularList<T>::~DoublyLinkedCircularList()
 {
+	clear();
 	size = 0;
 	delete head;
-	delete current;
+	current = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
 template<typename T>
-DoublyLinkedCircularList<T>::Iterator::Iterator()
+DoublyLinkedCircularList<T>::Iterator::Iterator(DoublyLinkedCircularList<T>& list)
 {
-	this->list = nullptr;
-}
-
-template<typename T>
-DoublyLinkedCircularList<T>::Iterator::Iterator(DoublyLinkedCircularList<T>*const list)
-{
-	this->list = list;
+	this->list = &list;
 }
 
 template<typename T>

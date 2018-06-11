@@ -12,17 +12,12 @@ private:
 		node* previous;
 		node* next;
 
-		node(T data = T(), node& previous = nullptr, node& next = nullptr) {
-			this->data = data;
-			this->previous = &previous;
-			this->next = &next;
+		node(T data = T(), node* previous = nullptr, node* next = nullptr);
+	/*		this->data = data;
+			this->previous = previous;
+			this->next = next;
 		}
-
-		~node() {
-			delete previous;
-			delete next;
-			data = 0;
-		}
+		*/
 	};
 	node* head;
 	node* current;
@@ -32,8 +27,7 @@ public:
 	class Iterator : public IIterator<T> {
 		DoublyLinkedCircularList<T>* list;
 	public:
-		Iterator();
-		Iterator(DoublyLinkedCircularList<T>*const list);
+		Iterator(DoublyLinkedCircularList& list);
 		virtual ~Iterator();
 		virtual void start();
 		virtual T get();
@@ -44,6 +38,9 @@ public:
 	DoublyLinkedCircularList();
 	DoublyLinkedCircularList(T& data);
 	//DoublyLinkedCircularList(const DoublyLinkedCircularList<T> &copy);
+	//DoublyLinkedCircularList(DoublyLinkedCircularList<T> &&stolen);
+	//DoublyLinkedCircularList& operator= (DoublyLinkedCircularList& copy);
+	//DoublyLinkedCircularList& operator= (DoublyLinkedCircularList&& stolen);
 	virtual ~DoublyLinkedCircularList();
 
 	virtual void push(T& elem);
