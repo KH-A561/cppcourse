@@ -12,7 +12,7 @@ private:
 		node* previous;
 		node* next;
 
-		node(T data = T(), node* previous = nullptr, node* next = nullptr);
+		node(T data = T(), node* next = nullptr, node* previous = nullptr);
 	/*		this->data = data;
 			this->previous = previous;
 			this->next = next;
@@ -37,10 +37,10 @@ public:
 
 	DoublyLinkedCircularList();
 	DoublyLinkedCircularList(T& data);
-	//DoublyLinkedCircularList(const DoublyLinkedCircularList<T> &copy);
-	//DoublyLinkedCircularList(DoublyLinkedCircularList<T> &&stolen);
-	//DoublyLinkedCircularList& operator= (DoublyLinkedCircularList& copy);
-	//DoublyLinkedCircularList& operator= (DoublyLinkedCircularList&& stolen);
+	DoublyLinkedCircularList(DoublyLinkedCircularList<T> &copy);
+	DoublyLinkedCircularList(DoublyLinkedCircularList<T> &&stolen);
+	DoublyLinkedCircularList& operator= (DoublyLinkedCircularList& copy);
+	DoublyLinkedCircularList& operator= (DoublyLinkedCircularList&& stolen);
 	virtual ~DoublyLinkedCircularList();
 
 	virtual void push(T& elem);
@@ -50,4 +50,5 @@ public:
 	virtual bool isEmpty();
 	virtual int getSize();
 	virtual IIterator<T>* iterator();
+	virtual void toString();
 };

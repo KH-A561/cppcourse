@@ -14,5 +14,6 @@ public:
 	virtual bool isEmpty() = 0;
 	virtual int getSize() = 0;
 	virtual IIterator<T>* iterator() = 0;
+	virtual void toString() = 0;
 };
 

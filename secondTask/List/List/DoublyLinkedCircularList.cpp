@@ -6,49 +6,122 @@
 #include <cstdlib> 
 
 template<typename T>
-DoublyLinkedCircularList<T>::node::node(T elem, node* prev, node* nxt) : data(elem), previous(prev), next(nxt) {}
+DoublyLinkedCircularList<T>::node::node(T elem, node* nxt, node* prev) : data(elem), next(nxt), previous(prev) {}
 
 template<typename T>
 DoublyLinkedCircularList<T>::DoublyLinkedCircularList()
 {
 	size = 0;
-	head = new node(nullptr, head, head);
-	current = nullptr;
+	head = new node(NULL, head, head);
+	current = head;
 }
 
 template<typename T>
-DoublyLinkedCircularList<T>::DoublyLinkedCircularList(T& data)
+DoublyLinkedCircularList<T>::DoublyLinkedCircularList(DoublyLinkedCircularList<T> &copy)
 {
-	size = 1;
-	head = new node(data, head, head);
-	current = nullptr;
+	head = new node(nullptr, head, head);
+	node* temp = copy.head->next;
+	current = head;
+	size = 0;
+	while (temp != copy.head) {
+		node* buf = new node(temp->data, head, current);
+		current->next = buf;
+		current = current->next;
+		head->previous= buf;
+		temp = temp->next;
+		size++;
+	}
 }
 
-/*template<typename T>
-DoublyLinkedCircularList<T>::DoublyLinkedCircularList(const DoublyLinkedCircularList<T> &copy)
+template<typename T>
+DoublyLinkedCircularList<T>::DoublyLinkedCircularList(DoublyLinkedCircularList<T> &&stolen)
 {
+	this->head = stolen.head;
+	this->current = stolen.current;
+	this->size = stolen.size;
+	stolen.head = nullptr;
+	stolen.current = nullptr;
+	stolen.size = 0;
+}
 
+template<typename T>
+DoublyLinkedCircularList<T>& DoublyLinkedCircularList<T>::operator= (DoublyLinkedCircularList<T>& copy)
+{
+	if (this == &copy) {
+		return *this;
+	}
+	clear();
+	current = head;
+	node* temp = copy.head->next;
+	while (temp != copy.head) {
+		current->next = new node(temp ->data, head, current);
+		current = current->next;
+		head->previous = current;
+		temp = temp->next;
+	}
+	size = copy.size;
+	return *this;
+}
 
-}*/
+template<typename T>
+DoublyLinkedCircularList<T>& DoublyLinkedCircularList<T>::operator= (DoublyLinkedCircularList<T>&& stolen)
+{
+	if (this != &stolen) {
+		this->head = stolen.head;
+		this->current = stolen.current;
+		this->size = stolen.size;
+		stolen.head = nullptr;
+		stolen.current = nullptr;
+		stolen.size = 0;
+	}
+	return *this;
+}
+
 
 template<typename T>
 void DoublyLinkedCircularList<T>::push(T& elem)
 {
-	if (current == nullptr) throw std::invalid_argument("There's no iterator for this list");
-	node* newElem = new node(elem, current, current->next);
-	current->next->previous = newElem;
-	current->next = newElem;
-	current = current->previous;
-	size++;
+	if (size != 0) {
+		node* newElem = new node(elem, current, current->previous);
+		current->previous->next = newElem;
+		current->previous = newElem;
+		current = current->previous;
+		size++;
+	}
+	else {
+		node* newElem = new node(elem, head, head);
+		head->next = newElem;
+		head->previous = newElem;
+		current = head->next;
+		size++;
+	}
 }
 
 template<typename T>
 void DoublyLinkedCircularList<T>::remove()
 {
-	this->current->next->previous = this->current->previous;
-	this->current->previous->next = this->current->next;
-	this->current->~node();
-	size--;
+	if (current == head) {
+		current = head->next;
+	}
+	if (size == 0) {
+		throw std::invalid_argument("An exception at pop(): list is empty");
+	}
+	if (size == 1) {
+		delete current;
+		head->next = head;
+		head->previous = head;
+		size--;
+	} 
+	else {
+		current->previous->next = current->next;
+		current->next->previous = current->previous;
+		node* temp = current;
+		current = current->next;
+		temp->next = nullptr;
+		temp->previous = nullptr;
+		delete temp;
+		size--;
+	}
 }
 
 template<typename T>
@@ -56,25 +129,25 @@ IIterator<T>* DoublyLinkedCircularList<T>::listIterator(T elem)
 {
 	IIterator<T>* iter = this->iterator();
 	iter->start();
-	while (iter->hasNext()) {
+	while (!(iter->hasNext())) {
 		if (iter->get() == elem) {
 			return iter;
 		}
-		else {
-			iter->next();
-		}
+		iter->next();
 	}
+	throw std::invalid_argument("Element not found");
 	return nullptr;
 }
 
 template<typename T>
 void DoublyLinkedCircularList<T>::clear()
 {
-	IIterator<T>* iter = this->iterator();
-	iter->start();
-	while (iter->hasNext()) {
-		this->remove();
-		iter->next();
+	if (head == nullptr) {
+		return;
+	}
+	current = head->next;
+	while (!isEmpty()) {
+		remove();
 	}
 }
 
@@ -99,6 +172,17 @@ IIterator<T>* DoublyLinkedCircularList<T>::iterator()
 }
 
 template<typename T>
+void DoublyLinkedCircularList<T>::toString()
+{
+	IIterator<T>* iter = this->iterator();
+	while (!(iter->hasNext())) {
+		std::cout << iter->get();
+		iter->next();
+	}
+	std::cout << std::endl;
+}
+
+template<typename T>
 DoublyLinkedCircularList<T>::~DoublyLinkedCircularList()
 {
 	clear();
@@ -117,7 +201,7 @@ DoublyLinkedCircularList<T>::Iterator::Iterator(DoublyLinkedCircularList<T>& lis
 template<typename T>
 void DoublyLinkedCircularList<T>::Iterator::start()
 {
-	this->list->current = this->list->head;
+	this->list->current = this->list->head->previous;
 }
 
 template<typename T>
@@ -129,13 +213,13 @@ T DoublyLinkedCircularList<T>::Iterator::get()
 template<typename T>
 void DoublyLinkedCircularList<T>::Iterator::next()
 {
-	this->list->current = this->list->current->next;
+	this->list->current = this->list->current->previous;
 }
 
 template<typename T>
 bool DoublyLinkedCircularList<T>::Iterator::hasNext()
 {
-	return (this->list->current == this->list->head->previous) ? false : true;
+	return list->current == list->head;
 }
 
 template<typename T>
