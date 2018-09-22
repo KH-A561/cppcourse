@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexander/Apps/clion-2018.1.5/WordTree/WordTree.cpp
+WordTree.h
+/home/alexander/Apps/clion-2018.1.5/WordTree/WordTree.h
+
+/home/alexander/Apps/clion-2018.1.5/WordTree/WordTree.h
+string
+-
+
+/home/alexander/Apps/clion-2018.1.5/WordTree/main.cpp
+iostream
+-
+WordTree.cpp
+/home/alexander/Apps/clion-2018.1.5/WordTree/WordTree.cpp
+

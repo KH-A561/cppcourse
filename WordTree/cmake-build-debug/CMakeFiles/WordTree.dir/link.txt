@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/WordTree.dir/main.cpp.o  -o WordTree 

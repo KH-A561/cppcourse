@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexander/Apps/clion-2018.1.5/HashTable/HashTable.cpp
+HashTable.h
+/home/alexander/Apps/clion-2018.1.5/HashTable/HashTable.h
+
+/home/alexander/Apps/clion-2018.1.5/HashTable/HashTable.h
+bits/stdc++.h
+-
+
+/home/alexander/Apps/clion-2018.1.5/HashTable/main.cpp
+iostream
+-
+HashTable.cpp
+/home/alexander/Apps/clion-2018.1.5/HashTable/HashTable.cpp
+
