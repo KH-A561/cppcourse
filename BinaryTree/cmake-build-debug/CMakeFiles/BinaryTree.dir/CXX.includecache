@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexander/Apps/clion-2018.1.5/BinaryTree/BinaryTree.cpp
+BinaryTree.h
+/home/alexander/Apps/clion-2018.1.5/BinaryTree/BinaryTree.h
+cstring
+-
+
+/home/alexander/Apps/clion-2018.1.5/BinaryTree/BinaryTree.h
+iostream
+-
+vector
+-
+algorithm
+-
+
+/home/alexander/Apps/clion-2018.1.5/BinaryTree/main.cpp
+iostream
+-
+iomanip
+-
+BinaryTree.h
+/home/alexander/Apps/clion-2018.1.5/BinaryTree/BinaryTree.h
+
