@@ -1,0 +1,3 @@
+/home/alexander/Apps/clion-2018.1.5/DoubleList/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/alexander/Apps/clion-2018.1.5/DoubleList/cmake-build-debug/CMakeFiles/DoubleList.dir
+/home/alexander/Apps/clion-2018.1.5/DoubleList/cmake-build-debug/CMakeFiles/edit_cache.dir

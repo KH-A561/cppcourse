@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/alexander/Apps/clion-2018.1.5/DoubleList/DoublyLinkedCircularList.cpp
+DoublyLinkedCircularList.h
+/home/alexander/Apps/clion-2018.1.5/DoubleList/DoublyLinkedCircularList.h
+
+/home/alexander/Apps/clion-2018.1.5/DoubleList/DoublyLinkedCircularList.h
+
+/home/alexander/Apps/clion-2018.1.5/DoubleList/IIterator.h
+
+/home/alexander/Apps/clion-2018.1.5/DoubleList/IList.h
+IIterator.h
+/home/alexander/Apps/clion-2018.1.5/DoubleList/IIterator.h
+
+/home/alexander/Apps/clion-2018.1.5/DoubleList/main.cpp
+iostream
+-
+IList.h
+/home/alexander/Apps/clion-2018.1.5/DoubleList/IList.h
+DoublyLinkedCircularList.h
+/home/alexander/Apps/clion-2018.1.5/DoubleList/DoublyLinkedCircularList.h
+DoublyLinkedCircularList.cpp
+/home/alexander/Apps/clion-2018.1.5/DoubleList/DoublyLinkedCircularList.cpp
+
