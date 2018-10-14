@@ -122,14 +122,14 @@ void WordTree::removeWord(const char *word) {
         if (node->rightNode->leftNode) {
           WordNode *lowestParent = WordNode::findParentOfTheLowest(node->rightNode);
           if (!lowestParent->rightNode) {
-            *node->word = lowestParent->word->data();
+            *node->word = *lowestParent->word;
             node->numOfOccurrences = lowestParent->numOfOccurrences;
             WordNode *leaf = lowestParent->leftNode;
             lowestParent->leftNode = nullptr;
             delete leaf;
             numOfWords--;
           } else {
-            *node->word = lowestParent->leftNode->word->data();
+            *node->word = *lowestParent->leftNode->word;
             node->numOfOccurrences = lowestParent->leftNode->numOfOccurrences;
             WordNode *buf = lowestParent->leftNode;
             lowestParent->leftNode = lowestParent->leftNode->rightNode;
@@ -138,7 +138,7 @@ void WordTree::removeWord(const char *word) {
             numOfWords--;
           }
         } else {
-          *node->word = node->rightNode->word->data();
+          *node->word = *node->rightNode->word;
           node->numOfOccurrences = node->rightNode->numOfOccurrences;
           WordNode *buf = node->rightNode;
           node->rightNode = node->rightNode->rightNode;
@@ -172,4 +172,14 @@ WordTree::WordTree(WordTree &copy) {
   *this->root = WordNode(*copy.root);
   this->numOfWords = copy.numOfWords;
 }
+
+WordTree &WordTree::operator=(const WordTree& secondTree) {
+  if (this != &secondTree) {
+    delete this->root;
+    this->root = new WordTree::WordNode(*secondTree.root);
+    this->numOfWords = secondTree.numOfWords;
+  }
+  return *this;
+}
+
 

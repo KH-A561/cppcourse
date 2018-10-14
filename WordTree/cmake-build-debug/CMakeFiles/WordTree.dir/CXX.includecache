@@ -13,6 +13,10 @@ WordTree.h
 /home/alexander/Apps/clion-2018.1.5/WordTree/WordTree.h
 string
 -
+algorithm
+-
+stdexcept
+-
 
 /home/alexander/Apps/clion-2018.1.5/WordTree/main.cpp
 iostream

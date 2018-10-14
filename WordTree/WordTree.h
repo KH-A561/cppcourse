@@ -6,6 +6,7 @@
 #define WORDTREE_WORDTREE_H
 #include <string>
 #include <algorithm>
+#include <stdexcept>
 
 class WordTree {
  public:
@@ -95,10 +96,10 @@ class WordTree {
   int numOfWords;
 
  public:
-  WordTree(WordNode *node);
-  WordTree(const char *text);
+  explicit WordTree(WordNode *node);
+  explicit WordTree(const char *text);
   WordTree(WordTree &copy);
-  friend WordTree&operator=(WordTree secondTree);
+  WordTree& operator=(const WordTree& secondTree);
   ~WordTree();
 
   int findWord(const char *word);
@@ -108,7 +109,6 @@ class WordTree {
   int getNumberOfWords(WordNode *node);
   static std::ostream &inorderPrint(std::ostream &out, const WordNode *node);
   friend std::ostream &operator<<(std::ostream &out, const WordTree &tree);
-
 };
 
 #endif //WORDTREE_WORDTREE_H
