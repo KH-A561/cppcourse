@@ -83,4 +83,7 @@ void HashTable<K, V>::removeAll() {
   length = 0;
 }
 
-
+template<typename K, typename V>
+typename HashTable<K,V>::Iterator& HashTable<K, V>::iterator() {
+  return *new Iterator(*this);
+}
